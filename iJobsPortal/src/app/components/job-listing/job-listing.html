@@ -1,0 +1,28 @@
+@if(loadingService.loading$ | async) {
+    <div class="loading">
+        <p>Loading jobs...</p>
+        <div class="spinner"></div>
+    </div>
+} @else if(jobs.error) {
+    <div class="error">
+        <p>Error loading jobs: {{jobs.error}}</p>
+        <button (click)="ngOnInit()">Retry</button>
+    </div>
+} @else if(jobs.jobsList.length === 0) {
+    <div class="no-jobs">
+        <p>No jobs available</p>
+    </div>
+} @else {
+    <div class="jobs-container">
+        <h2>Available Jobs ({{jobs.jobsList.length}})</h2>
+        <ul class="jobs-list">
+            @for(job of jobs.jobsList; track job.id || $index) {
+                <li class="job-item">
+                    <h3>{{job.title}}</h3>
+                    <p>{{job.company}}</p>
+                    <p>{{job.location}}</p>
+                </li>
+            }
+        </ul>
+    </div>
+}
