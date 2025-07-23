@@ -19,15 +19,12 @@ export class JobListing implements OnInit {
   };
 
   ngOnInit() {
-    this.loadingService.show()
     this.jobService.getJobs().subscribe({
       next: (jobs: any) => {
-        this.loadingService.hide()
         this.jobs.jobsList = Array.isArray(jobs) ? jobs : [jobs];
         this.jobs.error = null;
       },
       error: (err: any) => {
-        this.loadingService.hide()
         this.jobs.error = err.message || 'Failed to load jobs';
         console.error('Error loading jobs:', err);
       }
